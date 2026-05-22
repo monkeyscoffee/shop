@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Input } from "@/components/ui/input";
@@ -48,9 +48,7 @@ function LoginPage() {
             <Input type="password" value={p} onChange={(e) => setP(e.target.value)} required />
           </div>
           <Button type="submit" disabled={busy} className="w-full rounded-full">{t("sign_in")}</Button>
-          <p className="text-center text-sm text-muted-foreground">
-            {t("no_account")} <Link to="/register" className="text-accent underline">{t("sign_up")}</Link>
-          </p>
+
         </form>
       </section>
     </div>
