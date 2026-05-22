@@ -101,6 +101,18 @@ const dict: Dict = {
   saved: { ar: "تم الحفظ", en: "Saved" },
   deleted: { ar: "تم الحذف", en: "Deleted" },
 
+  admin_settings: { ar: "إعدادات الموقع", en: "Site settings" },
+  field_phone: { ar: "رقم الهاتف", en: "Phone number" },
+  field_email: { ar: "البريد الإلكتروني", en: "Email" },
+  field_address_en: { ar: "العنوان (إنجليزي)", en: "Address (English)" },
+  field_address_ar: { ar: "العنوان (عربي)", en: "Address (Arabic)" },
+  field_about_en: { ar: "من نحن (إنجليزي)", en: "About us (English)" },
+  field_about_ar: { ar: "من نحن (عربي)", en: "About us (Arabic)" },
+  field_about_p2_en: { ar: "فقرة ثانية (إنجليزي)", en: "Second paragraph (English)" },
+  field_about_p2_ar: { ar: "فقرة ثانية (عربي)", en: "Second paragraph (Arabic)" },
+  field_hours_weekdays: { ar: "ساعات السبت-الخميس", en: "Weekdays hours" },
+  field_hours_friday: { ar: "ساعات الجمعة", en: "Friday hours" },
+
   footer_rights: { ar: "جميع الحقوق محفوظة", en: "All rights reserved" },
 };
 
