@@ -1,0 +1,1 @@
+import{u as s,Q as t}from"./Footer-LzDuKbEu.js";import{q as r,s as u}from"./index-iDCcrCzz.js";function y(e,a){return s(e,t)}const o=()=>r({queryKey:["site_settings"],queryFn:async()=>{const{data:e}=await u.from("site_settings").select("*").eq("id",!0).maybeSingle();return e??null}});export{o as s,y as u};
