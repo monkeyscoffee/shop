@@ -1,8 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import { Clock } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { useI18n } from "@/lib/i18n";
+import { settingsQuery } from "@/lib/settings";
 
 export const Route = createFileRoute("/hours")({
   head: () => ({ meta: [{ title: "Hours — Monkeys Coffee" }, { name: "description", content: "Opening hours." }] }),
@@ -11,6 +13,9 @@ export const Route = createFileRoute("/hours")({
 
 function Hours() {
   const { t } = useI18n();
+  const { data: s } = useQuery(settingsQuery());
+  const weekdays = s?.hours_weekdays_time ?? t("hours_weekdays_time");
+  const friday = s?.hours_friday_time ?? t("hours_friday_time");
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -22,8 +27,8 @@ function Hours() {
         </div>
         <div className="rounded-xl border border-border bg-card p-8 space-y-6">
           {[
-            { day: t("hours_weekdays"), time: t("hours_weekdays_time") },
-            { day: t("hours_friday"), time: t("hours_friday_time") },
+            { day: t("hours_weekdays"), time: weekdays },
+            { day: t("hours_friday"), time: friday },
           ].map((r, i) => (
             <div key={i} className="flex items-center justify-between gap-4 pb-6 border-b border-border last:border-0 last:pb-0">
               <div className="flex items-center gap-3">
@@ -39,3 +44,4 @@ function Hours() {
     </div>
   );
 }
+

@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { MapPin, Phone, Mail } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -7,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/lib/i18n";
+import { settingsQuery } from "@/lib/settings";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/contact")({
@@ -15,9 +17,14 @@ export const Route = createFileRoute("/contact")({
 });
 
 function Contact() {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
+  const { data: s } = useQuery(settingsQuery());
   const [name, setName] = useState("");
   const [msg, setMsg] = useState("");
+
+  const address = lang === "ar" ? (s?.address_ar ?? t("contact_address_value")) : (s?.address_en ?? t("contact_address_value"));
+  const phone = s?.phone ?? "+966 50 000 0000";
+  const email = s?.email ?? "hello@monkeys.coffee";
 
   return (
     <div className="min-h-screen bg-background">
@@ -32,15 +39,15 @@ function Contact() {
         <div className="grid gap-12 md:grid-cols-2">
           <div className="space-y-6">
             {[
-              { icon: MapPin, label: t("contact_address"), value: t("contact_address_value") },
-              { icon: Phone, label: t("contact_phone"), value: "+966 50 000 0000" },
-              { icon: Mail, label: t("contact_email"), value: "hello@monkeys.coffee" },
+              { icon: MapPin, label: t("contact_address"), value: address },
+              { icon: Phone, label: t("contact_phone"), value: phone },
+              { icon: Mail, label: t("contact_email"), value: email },
             ].map((row, i) => (
               <div key={i} className="flex items-start gap-4 rounded-xl border border-border bg-card p-5">
                 <row.icon className="h-5 w-5 text-accent mt-1" />
                 <div>
                   <div className="text-xs uppercase tracking-widest text-muted-foreground">{row.label}</div>
-                  <div className="mt-1 font-display text-lg">{row.value}</div>
+                  <div className="mt-1 font-display text-lg break-words">{row.value}</div>
                 </div>
               </div>
             ))}
