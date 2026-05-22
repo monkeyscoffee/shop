@@ -38,7 +38,7 @@ const dict: Dict = {
   },
   view_full_menu: { ar: "عرض القائمة كاملة", en: "View full menu" },
   view_details: { ar: "التفاصيل", en: "View details" },
-  sar: { ar: "ر.س", en: "SAR" },
+  sar: { ar: "ل.س", en: "S.P" },
   unavailable: { ar: "غير متوفر حالياً", en: "Currently unavailable" },
 
   menu_eyebrow: { ar: "القائمة", en: "The menu" },

@@ -61,15 +61,11 @@ export function Navbar() {
               </DropdownMenuSub>
               <DropdownMenuSeparator />
               {!user && (
-                <>
-                  <DropdownMenuItem onClick={() => navigate({ to: "/login" })}>
-                    <LogIn className="me-2 h-4 w-4" /> {t("admin_login")}
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => navigate({ to: "/register" })}>
-                    {t("admin_register")}
-                  </DropdownMenuItem>
-                </>
+                <DropdownMenuItem onClick={() => navigate({ to: "/login" })}>
+                  <LogIn className="me-2 h-4 w-4" /> {t("admin_login")}
+                </DropdownMenuItem>
               )}
+
               {user && isAdmin && (
                 <DropdownMenuItem onClick={() => navigate({ to: "/admin" })}>
                   <LayoutDashboard className="me-2 h-4 w-4" /> {t("dashboard")}

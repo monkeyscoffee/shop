@@ -9,7 +9,6 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as RegisterRouteImport } from './routes/register'
 import { Route as MenuRouteImport } from './routes/menu'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as HoursRouteImport } from './routes/hours'
@@ -18,11 +17,6 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
-const RegisterRoute = RegisterRouteImport.update({
-  id: '/register',
-  path: '/register',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const MenuRoute = MenuRouteImport.update({
   id: '/menu',
   path: '/menu',
@@ -67,7 +61,6 @@ export interface FileRoutesByFullPath {
   '/hours': typeof HoursRoute
   '/login': typeof LoginRoute
   '/menu': typeof MenuRoute
-  '/register': typeof RegisterRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -77,7 +70,6 @@ export interface FileRoutesByTo {
   '/hours': typeof HoursRoute
   '/login': typeof LoginRoute
   '/menu': typeof MenuRoute
-  '/register': typeof RegisterRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -88,7 +80,6 @@ export interface FileRoutesById {
   '/hours': typeof HoursRoute
   '/login': typeof LoginRoute
   '/menu': typeof MenuRoute
-  '/register': typeof RegisterRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -100,17 +91,8 @@ export interface FileRouteTypes {
     | '/hours'
     | '/login'
     | '/menu'
-    | '/register'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/about'
-    | '/admin'
-    | '/contact'
-    | '/hours'
-    | '/login'
-    | '/menu'
-    | '/register'
+  to: '/' | '/about' | '/admin' | '/contact' | '/hours' | '/login' | '/menu'
   id:
     | '__root__'
     | '/'
@@ -120,7 +102,6 @@ export interface FileRouteTypes {
     | '/hours'
     | '/login'
     | '/menu'
-    | '/register'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -131,18 +112,10 @@ export interface RootRouteChildren {
   HoursRoute: typeof HoursRoute
   LoginRoute: typeof LoginRoute
   MenuRoute: typeof MenuRoute
-  RegisterRoute: typeof RegisterRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/register': {
-      id: '/register'
-      path: '/register'
-      fullPath: '/register'
-      preLoaderRoute: typeof RegisterRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/menu': {
       id: '/menu'
       path: '/menu'
@@ -203,8 +176,17 @@ const rootRouteChildren: RootRouteChildren = {
   HoursRoute: HoursRoute,
   LoginRoute: LoginRoute,
   MenuRoute: MenuRoute,
-  RegisterRoute: RegisterRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
