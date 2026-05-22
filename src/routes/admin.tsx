@@ -187,11 +187,7 @@ function SiteSettingsEditor() {
     </div>
   );
 }
-      </section>
-      <Footer />
-    </div>
-  );
-}
+
 
 function ProductEditor({ draft, onClose, onSaved }: { draft: Draft; onClose: () => void; onSaved: () => void }) {
   const { t } = useI18n();
