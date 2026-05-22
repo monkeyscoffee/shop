@@ -14,6 +14,8 @@ export type Product = {
   price: number;
   image_url: string | null;
   is_available: boolean;
+  is_visible: boolean;
+  sort_order: number;
 };
 
 export function ProductCard({ p }: { p: Product }) {
