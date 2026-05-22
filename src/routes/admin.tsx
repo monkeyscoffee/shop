@@ -136,6 +136,57 @@ function AdminPage() {
             onSaved={() => { setEditing(null); refresh(); }}
           />
         )}
+
+        <SiteSettingsEditor />
+      </section>
+      <Footer />
+    </div>
+  );
+}
+
+function SiteSettingsEditor() {
+  const { t } = useI18n();
+  const qc = useQueryClient();
+  const { data } = useQuery(settingsQuery());
+  const [s, setS] = useState<Partial<SiteSettings>>({});
+  const [busy, setBusy] = useState(false);
+
+  useEffect(() => { if (data) setS(data); }, [data]);
+
+  const save = async () => {
+    setBusy(true);
+    const payload = { id: true, ...s };
+    const { error } = await supabase.from("site_settings").upsert(payload, { onConflict: "id" });
+    setBusy(false);
+    if (error) return toast.error(error.message);
+    toast.success(t("saved"));
+    qc.invalidateQueries({ queryKey: ["site_settings"] });
+  };
+
+  const f = (k: keyof SiteSettings) => (s[k] as string) ?? "";
+  const set = (k: keyof SiteSettings, v: string) => setS((p) => ({ ...p, [k]: v }));
+
+  return (
+    <div className="mt-16">
+      <h2 className="font-display text-3xl mb-6">{t("admin_settings")}</h2>
+      <div className="rounded-xl border border-border bg-card p-6 grid gap-4 sm:grid-cols-2">
+        <div><Label>{t("field_phone")}</Label><Input value={f("phone")} onChange={(e) => set("phone", e.target.value)} /></div>
+        <div><Label>{t("field_email")}</Label><Input type="email" value={f("email")} onChange={(e) => set("email", e.target.value)} /></div>
+        <div><Label>{t("field_address_en")}</Label><Input value={f("address_en")} onChange={(e) => set("address_en", e.target.value)} /></div>
+        <div><Label>{t("field_address_ar")}</Label><Input value={f("address_ar")} onChange={(e) => set("address_ar", e.target.value)} dir="rtl" /></div>
+        <div><Label>{t("field_hours_weekdays")}</Label><Input value={f("hours_weekdays_time")} onChange={(e) => set("hours_weekdays_time", e.target.value)} /></div>
+        <div><Label>{t("field_hours_friday")}</Label><Input value={f("hours_friday_time")} onChange={(e) => set("hours_friday_time", e.target.value)} /></div>
+        <div className="sm:col-span-2"><Label>{t("field_about_en")}</Label><Textarea rows={4} value={f("about_en")} onChange={(e) => set("about_en", e.target.value)} /></div>
+        <div className="sm:col-span-2"><Label>{t("field_about_ar")}</Label><Textarea rows={4} value={f("about_ar")} onChange={(e) => set("about_ar", e.target.value)} dir="rtl" /></div>
+        <div className="sm:col-span-2"><Label>{t("field_about_p2_en")}</Label><Textarea rows={3} value={f("about_p2_en")} onChange={(e) => set("about_p2_en", e.target.value)} /></div>
+        <div className="sm:col-span-2"><Label>{t("field_about_p2_ar")}</Label><Textarea rows={3} value={f("about_p2_ar")} onChange={(e) => set("about_p2_ar", e.target.value)} dir="rtl" /></div>
+        <div className="sm:col-span-2 flex justify-end">
+          <Button onClick={save} disabled={busy}>{t("admin_save")}</Button>
+        </div>
+      </div>
+    </div>
+  );
+}
       </section>
       <Footer />
     </div>
