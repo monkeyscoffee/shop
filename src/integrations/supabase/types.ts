@@ -77,6 +77,54 @@ export type Database = {
         }
         Relationships: []
       }
+      site_settings: {
+        Row: {
+          about_ar: string | null
+          about_en: string | null
+          about_p2_ar: string | null
+          about_p2_en: string | null
+          address_ar: string | null
+          address_en: string | null
+          email: string | null
+          hours_friday_time: string | null
+          hours_weekdays_time: string | null
+          id: boolean
+          map_url: string | null
+          phone: string | null
+          updated_at: string
+        }
+        Insert: {
+          about_ar?: string | null
+          about_en?: string | null
+          about_p2_ar?: string | null
+          about_p2_en?: string | null
+          address_ar?: string | null
+          address_en?: string | null
+          email?: string | null
+          hours_friday_time?: string | null
+          hours_weekdays_time?: string | null
+          id?: boolean
+          map_url?: string | null
+          phone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          about_ar?: string | null
+          about_en?: string | null
+          about_p2_ar?: string | null
+          about_p2_en?: string | null
+          address_ar?: string | null
+          address_en?: string | null
+          email?: string | null
+          hours_friday_time?: string | null
+          hours_weekdays_time?: string | null
+          id?: boolean
+          map_url?: string | null
+          phone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
